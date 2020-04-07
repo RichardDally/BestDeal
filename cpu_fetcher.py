@@ -20,7 +20,7 @@ class CpuFetcher(AbstractFetcher):
         Return product types you want to appear in tweets (one for each)
         To tweet about all product types: self.database.find_distinct_product_types()
         """
-        return ["CORE i9 9900K", "RYZEN 5 3600X"]
+        return ["3600X RYZEN 5", "I9-9900KF CORE"]
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
@@ -55,13 +55,13 @@ class CpuFetcher(AbstractFetcher):
             'Intel',
         ]
         lineup_type = ['Ryzen 3', 'Ryzen 5', 'Ryzen 7', 'Ryzen 9', 'Core']
-        standard_lineup = ['3200G', '1600 AF', '1600X', '2600X', '2600', '1400', '3600X', '3600', '2700X', '3700X', '3800X', '3900X', '3950X', 'i9-9900KF']
+        standard_lineup = ['3200G', '1600 AF', '1600X', '2600X', '2600', '1400', '3600X', '3600', '2700X', '3700X', '3800X', '3900X', '3950X', 'I9-9900KF']
         higher_lineup = {
             "RYZEN 3": ["3200G"],
             "RYZEN 5": ["1600 AF", "1600X", "2600X", "2600", "1400", "3600X", "3600"],
             "RYZEN 7": ["2700X", "3700X", "3800X"],
             "RYZEN 9": ["3900X", "3950X"],
-            "CORE": ["i9-9900KF"],
+            "CORE": ["I9-9900KF"]
         }
 
         # Looking for CPU
