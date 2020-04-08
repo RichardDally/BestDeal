@@ -5,7 +5,7 @@ import time
 from pricedatabase import PriceDatabase
 from abc import ABCMeta, abstractmethod
 from source import Source
-from typing import Optional, Dict, Tuple, List
+from typing import Optional, Dict, Tuple, List, Iterable
 from loguru import logger
 from toolbox import get_north_east_arrow
 from toolbox import get_south_east_arrow
@@ -230,7 +230,7 @@ class AbstractFetcher:
             logger.info(template.format(**product))
 
     @staticmethod
-    def find_exactly_one_element(pattern_data: list, raw_data: str) -> Optional[str]:
+    def find_exactly_one_element(pattern_data: Iterable, raw_data: str) -> Optional[str]:
         """
         Search a pattern_data among raw_data
         """

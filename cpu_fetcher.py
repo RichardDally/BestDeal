@@ -20,12 +20,12 @@ class CpuFetcher(AbstractFetcher):
         Return product types you want to appear in tweets (one for each)
         To tweet about all product types: self.database.find_distinct_product_types()
         """
-        return ["3600X RYZEN 5", "I9-9900KF CORE"]
+        return ["3600X RYZEN 5", "9900KF CORE I9"]
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
             TopAchat: {
-                "Intel Core": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wpr_puis_mc_est_intel%252Bi9.html",
+                "Intel Core": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wpr_puis_ordre_est_P_puis_sens_est_ASC_puis_f_est_3-61|557-8827.html",
                 "AMD Ryzen": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wpr_puis_ordre_est_P_puis_sens_est_ASC_puis_f_est_3-63|557-8865,8660,8617,10578.html",
             },
             GrosBill: {
@@ -37,39 +37,21 @@ class CpuFetcher(AbstractFetcher):
                 "AMD Ryzen": "https://www.cybertek.fr/processeur-5/amd-23.aspx?crits=3789%3a3777%3a3694%3a3987"
             },
             LDLC: {
-                "Intel Core": "https://www.ldlc.com/informatique/pieces-informatique/processeur/c4300/+ftxt-intel-core-i9.html",
+                "Intel Core": "https://www.ldlc.com/informatique/pieces-informatique/processeur/c4300/+fb-C000000192+fv579-15953.html?sort=1",
                 "AMD Ryzen": "https://www.ldlc.com/informatique/pieces-informatique/processeur/c4300/+fv579-15490,15637,16016,17684.html?sort=1"
             },
             MindFactory: {
-                "Intel Core": "https://www.mindfactory.de/search_result.php?select_search=30953&search_query=intel+i9",
+                "Intel Core": "https://www.mindfactory.de/Hardware/Prozessoren+(CPU)/INTEL+Desktop.html",
                 "AMD Ryzen": "https://www.mindfactory.de/search_result.php/search_query/AMD+RYZEN/Hardware/Prozessoren+(CPU).html"
             },
         }
 
-    def _extract_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
-
-        # Define the different brands and products of CPU
-
-        brands = [
-            'AMD',
-            'Intel',
-        ]
-        lineup_type = ['Ryzen 3', 'Ryzen 5', 'Ryzen 7', 'Ryzen 9', 'Core']
-        standard_lineup = ['3200G', '1600 AF', '1600X', '2600X', '2600', '1400', '3600X', '3600', '2700X', '3700X', '3800X', '3900X', '3950X', 'I9-9900KF']
+    def _extract_intel_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
+        lineup_type = ["Core i9"]
+        standard_lineup = ["9900KF"]
         higher_lineup = {
-            "RYZEN 3": ["3200G"],
-            "RYZEN 5": ["1600 AF", "1600X", "2600X", "2600", "1400", "3600X", "3600"],
-            "RYZEN 7": ["2700X", "3700X", "3800X"],
-            "RYZEN 9": ["3900X", "3950X"],
-            "CORE": ["I9-9900KF"]
+            "CORE I9":    ["9900KF"]
         }
-
-        # Looking for CPU
-        brand = self.find_exactly_one_element(brands, product_description)
-        if not brand:
-            logger.warning(f'Brand not found in product [{product_description}]')
-            return None, None
-
         lineup_type_result = self.find_exactly_one_element(lineup_type, product_description)
 
         if not lineup_type_result:
@@ -85,7 +67,47 @@ class CpuFetcher(AbstractFetcher):
             logger.warning(f"Product type not found in product [{product_description}]")
             return None, None
 
-        return brand, product_type
+        return "INTEL", product_type
+
+    def _extract_amd_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
+        lineup_type = ['Ryzen 3', 'Ryzen 5', 'Ryzen 7', 'Ryzen 9']
+        standard_lineup = ['3200G', '1600 AF', '1600X', '2600X', '2600', '1400', '3600X', '3600', '2700X', '3700X',
+                           '3800X', '3900X', '3950X']
+        higher_lineup = {
+            "RYZEN 3": ["3200G"],
+            "RYZEN 5": ["1600 AF", "1600X", "2600X", "2600", "1400", "3600X", "3600"],
+            "RYZEN 7": ["2700X", "3700X", "3800X"],
+            "RYZEN 9": ["3900X", "3950X"]
+        }
+
+        lineup_type_result = self.find_exactly_one_element(lineup_type, product_description)
+        if not lineup_type_result:
+            logger.warning(f"Brand not found in product [{product_description}]")
+            return None, None
+        product_class = self.find_exactly_one_element(standard_lineup, product_description)
+
+        if product_class in higher_lineup[lineup_type_result]:
+            # Higher lineup
+            product_type = f'{product_class} {lineup_type_result}'
+        else:
+            logger.warning(f"Product type not found in product [{product_description}]")
+            return None, None
+
+        return "AMD", product_type
+
+    def _extract_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
+        extract_mapping = {
+            "AMD":  self._extract_amd_product_data,
+            "INTEL": self._extract_intel_product_data
+        }
+        # Identify CPU brand
+        brand = self.find_exactly_one_element(extract_mapping.keys(), product_description)
+        if not brand:
+            logger.warning(f'Brand not found in product [{product_description}]')
+            return None, None
+
+        return extract_mapping[brand](product_description)
+
 
 if __name__ == '__main__':
     load_dotenv()
