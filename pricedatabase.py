@@ -13,7 +13,7 @@ class PriceDatabase:
     def __init__(self, collection_name):
         self.database_name = "PriceHistorization"
         logger.info('Connecting to database [{}]'.format(self.database_name))
-        self.client = MongoClient("mongodb://localhost:27017/")
+        self.client = MongoClient(os.environ.get("ATLAS_CONNECTION_STRING"))
         self.database = self.client[self.database_name]
         self.collection = self.database[collection_name]
 
