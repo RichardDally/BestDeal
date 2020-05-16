@@ -28,10 +28,14 @@ class AbstractFetcher:
         """
         database: PriceDatabase object to access database
         wait_in_seconds: waiting time before two scans
+        fetch_prices: scrap data from vendors
+        display_lowest: display lowest prices for all product types
         tweet_products: publish on Twitter lowest prices
         """
         self.database = database
         self.wait_in_seconds = 900
+        self.fetch_prices = True
+        self.display_lowest = True
         self.tweet_products = False
 
     @abstractmethod
@@ -133,8 +137,10 @@ class AbstractFetcher:
     def main_loop(self):
         try:
             # self.database.delete_price_anomalies()
-            self._scrap_and_store()
-            self._display_best_deals()
+            if self.fetch_prices:
+                self._scrap_and_store()
+            if self.display_lowest:
+                self._display_best_deals()
             if self.tweet_products:
                 self._tweet_products()
         except Exception as exception:
