@@ -3,6 +3,7 @@ requests==2.20.0
 dash==0.43.0
 loguru==0.2.5
 pymongo==3.9.0
+dnspython
 tweepy==3.8.0
 python-dotenv==0.10.5
-dnspython
+pymongo_inmemory
