@@ -34,7 +34,8 @@ class PriceDatabase:
         cursor = cursor.sort("timestamp", ASCENDING)
         for post in cursor.limit(1):
             return post
-        return None
+        # TODO: implement specific exception
+        raise Exception("Missing last price")
 
     def find_cheapest(self, product_type: str, datetime_regex: str):
         """
@@ -44,21 +45,16 @@ class PriceDatabase:
         second_cursor = first_cursor.sort("product_price", ASCENDING)
         for post in second_cursor.limit(1):
             return post
-        return None
-
-    def find_oldest_from_all_times(self, product_type: str):
-        first_cursor = self.collection.find({"product_type": product_type})
-        second_cursor = first_cursor.sort("timestamp", ASCENDING)
-        for post in second_cursor.limit(1):
-            return post
-        return None
+        # TODO: implement specific exception
+        raise Exception("Missing cheapest")
 
     def find_cheapest_from_all_times(self, product_type: str):
         first_cursor = self.collection.find({"product_type": product_type})
         second_cursor = first_cursor.sort("product_price", ASCENDING)
         for post in second_cursor.limit(1):
             return post
-        return None
+        # TODO: implement specific exception
+        raise Exception("Missing ever cheapest")
 
     def delete_price_anomalies(self) -> None:
         """
