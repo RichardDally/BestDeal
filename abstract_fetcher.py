@@ -90,7 +90,7 @@ class AbstractFetcher:
         for product_type in self._get_tweeted_product_types():
             try:
                 tweet_text = self._format_cheapest_product_tweet(product_type)
-                tweet(tweet_text)
+                # tweet(tweet_text)
             except Exception as exception:
                 logger.exception(exception)
 
