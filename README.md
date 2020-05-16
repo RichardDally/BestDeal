@@ -32,7 +32,7 @@ Master branch:
 - MongoDB (persistent storage)
 - BeautifulSoup (html parsing)
 - Loguru (logging)
-- Tweepy (Twitter)
+- Tweepy (twitter api)
 - Python-Dotenv (secrets management)
 - Dash (web frontend)
 
