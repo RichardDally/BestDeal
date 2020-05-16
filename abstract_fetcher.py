@@ -237,9 +237,12 @@ class AbstractFetcher:
         logger.info(f"Best deals for [{today_date}]")
         cheapest_products = []
         for product_type in self.database.find_distinct_product_types():
-            cheapest = self.database.find_cheapest(product_type, today_date)
-            if cheapest is not None:
+            try:
+                cheapest = self.database.find_cheapest(product_type, today_date)
                 cheapest_products.append(cheapest)
+            except Exception as exception:
+                logger.exception(exception)
+                continue
         max_lengths = {}
         for product in cheapest_products:
             for key, value in product.items():
