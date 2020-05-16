@@ -85,7 +85,7 @@ class NVidiaFetcher(AbstractFetcher):
             }
         }
 
-    def _extract_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
+    def _extract_product_data(self, product_description: str) -> Tuple[Optional[str], Optional[str]]:
         brands = [
             'GAINWARD',
             'KFA2',

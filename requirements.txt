@@ -5,3 +5,4 @@ loguru==0.2.5
 pymongo==3.9.0
 tweepy==3.8.0
 python-dotenv==0.10.5
+dnspython

@@ -80,7 +80,7 @@ class CpuFetcher(AbstractFetcher):
         }
         return self._get_brand_and_product_type(product_description, brand, brands, families)
 
-    def _extract_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
+    def _extract_product_data(self, product_description: str) -> Tuple[Optional[str], Optional[str]]:
         extract_mapping = {
             "AMD":  self._extract_amd_product_data,
             "INTEL": self._extract_intel_product_data
