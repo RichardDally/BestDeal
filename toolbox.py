@@ -25,6 +25,10 @@ def get_link_emoji() -> str:
     return "\U0001F517"
 
 
+def get_canada_emoji() -> str:
+    return "\U0001F1E6"
+
+
 def get_lizard_emoji() -> str:
     return "\U0001F98E"
 
@@ -45,8 +49,17 @@ def get_yesterday_date() -> str:
     return datetime.strftime(datetime.now(timezone.utc) - timedelta(1), "%Y%m%d")
 
 
+def convert_datetime_to_date(date_time: str) -> str:
+    """ Example: 20200515_130607 to 2020/05/15 """
+    return datetime.strptime(date_time, '%Y%m%d_%H%M%S').strftime('%Y/%m/%d')
+
+
 def get_today_date() -> str:
     return datetime.now(timezone.utc).strftime('%Y%m%d')
+
+
+def get_yesterday_datetime() -> str:
+    return datetime.strftime(datetime.now(timezone.utc) - timedelta(1), "%Y%m%d_%H%M%S")
 
 
 def get_today_datetime() -> str:
