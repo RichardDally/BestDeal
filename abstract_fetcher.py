@@ -29,9 +29,9 @@ class AbstractFetcher:
         """
         self.database = database
         self.wait_in_seconds = 900
-        self.fetch_prices = True
-        self.display_lowest = True
-        self.tweet_products = False
+        self.fetch_prices = False
+        self.display_lowest = False
+        self.tweet_products = True
 
     @abstractmethod
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
