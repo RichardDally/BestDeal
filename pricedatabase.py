@@ -2,6 +2,7 @@
 
 import os
 from pymongo import MongoClient, ASCENDING
+from typing import Optional
 from loguru import logger
 
 
@@ -40,24 +41,19 @@ class PriceDatabase:
         # TODO: implement specific exception
         raise Exception("Missing last price")
 
-    def find_cheapest(self, product_type: str, datetime_regex: str):
+    def find_cheapest(self, product_type: str, timestamp_regex: Optional[str]):
         """
         Example: find_cheapest("2080 TI", get_today_date())
         """
-        first_cursor = self.collection.find({"product_type": product_type, "timestamp": {'$regex': datetime_regex}})
+        post_filter = {"product_type": product_type}
+        if timestamp_regex is not None:
+            post_filter["timestamp"] = {'$regex': timestamp_regex}
+        first_cursor = self.collection.find(post_filter)
         second_cursor = first_cursor.sort("product_price", ASCENDING)
         for post in second_cursor.limit(1):
             return post
         # TODO: implement specific exception
         raise Exception("Missing cheapest")
-
-    def find_cheapest_from_all_times(self, product_type: str):
-        first_cursor = self.collection.find({"product_type": product_type})
-        second_cursor = first_cursor.sort("product_price", ASCENDING)
-        for post in second_cursor.limit(1):
-            return post
-        # TODO: implement specific exception
-        raise Exception("Missing ever cheapest")
 
     def delete_price_anomalies(self) -> None:
         """
