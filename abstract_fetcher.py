@@ -13,16 +13,11 @@ from toolbox import get_south_east_arrow
 from toolbox import get_rightwards_arrow
 from toolbox import get_see_no_evil_monkey_emoji
 from toolbox import get_today_date, get_today_datetime, get_yesterday_date
-from toolbox import get_lizard_emoji
-from toolbox import get_money_mouth_face_emoji
-from toolbox import get_link_emoji
-from toolbox import get_first_place_medal_emoji
 from publish import tweet
 
 
 class AbstractFetcher:
     __metaclass__ = ABCMeta
-    Prices = NamedTuple("Prices", [('lowest_ever', float), ('today_lowest', float), ('yesterday_lowest', float)])
 
     def __init__(self, database: Optional[PriceDatabase]):
         """
@@ -50,39 +45,37 @@ class AbstractFetcher:
     def _get_tweeted_product_types(self) -> List[str]:
         pass
 
-    def _retrieve_prices(self, product_type) -> Prices:
-        today_lowest = self.database.find_cheapest(product_type, get_today_date())
-        yesterday_lowest = self.database.find_cheapest(product_type, get_yesterday_date())
-        lowest_ever = self.database.find_cheapest_from_all_times(product_type)
-
-        if today_lowest['product_price'] is None:
-            raise Exception(f"Missing today data for product [{product_type}]")
-
-        today_price = float(today_lowest['product_price'])
-        yesterday_price = float(yesterday_lowest['product_price']) if yesterday_lowest else None
-        lowest_ever_price = float(lowest_ever['product_price']) if lowest_ever else None
-
-        return self.Prices(lowest_ever_price, today_price, yesterday_price)
+    def _retrieve_cheapest(self, product_type: str, timestamp_regex: Optional[str]):
+        try:
+            cheapest_post = self.database.find_cheapest(product_type, timestamp_regex)
+            name = cheapest_post["product_name"]
+            brand = cheapest_post["product_brand"]
+            price = float(cheapest_post["product_price"])
+            timestamp = cheapest_post["timestamp"]
+            url = cheapest_post["url"]
+            return name, brand, price, timestamp, url
+        except ValueError as exception:
+            logger.warning(f"Unable to convert to float. [{exception}]")
+            raise
+        except KeyError as exception:
+            logger.warning(f"Missing key. [{exception}]")
+            raise
 
     def _format_cheapest_product_tweet(self, product_type: str) -> str:
-        lowest_ever_price, today_price, yesterday_price = self._retrieve_prices(product_type)
-        logger.debug(f"Today price [{today_price}] yesterday price [{yesterday_price}]")
+        name, brand, price, _, url = self._retrieve_cheapest(product_type, get_today_date())
+        yesterday_comparison = self._compute_statistics("Compared to yesterday", price, product_type, get_yesterday_date())
+        cheapest_ever_comparison = self._compute_statistics("Compared to cheapest ever", price, product_type, None)
 
-        yesterday_comparison = self._build_comparison("D-1", today_price, yesterday_price)
-
-        if lowest_ever_price and today_price <= lowest_ever_price:
-            all_times_comparison = f"All times: {get_first_place_medal_emoji()} lowest price detected !"
-        else:
-            all_times_comparison = self._build_comparison("All times", today_price, lowest_ever_price)
-
-        # TODO: Improve tweet for CPU !
         tweet_text = \
-            f"{today_cheapest['product_name']}\n" \
-            f"{get_money_mouth_face_emoji()} {today_cheapest['product_price']}€\n" \
-            f"{get_link_emoji()} {today_cheapest['url']}\n" \
-            f"{yesterday_comparison}\n" \
-            f"From yesterday: {yesterday_cheapest['product_price']}€ \n" \
-            f"Lowest spotted: {all_times_cheapest['product_price']}€ ({convert_datetime_to_date(all_times_cheapest['timestamp'])})"
+            f"{product_type} lowest price (#{brand})\n" \
+            f"{name}\n" \
+            f"{price}€\n" \
+            f"{url}"
+        if yesterday_comparison:
+            tweet_text += f"\n{yesterday_comparison}"
+        if cheapest_ever_comparison:
+            tweet_text += f"\n{cheapest_ever_comparison}"
+
         logger.debug(f"Tweeting [{tweet_text}]")
         return tweet_text
 
@@ -127,11 +120,12 @@ class AbstractFetcher:
             trend = get_rightwards_arrow()
         return trend
 
-    def _build_comparison(self, title, today_price, reference_price):
-        evolution_rate = self._compute_evolution_rate(today_price, reference_price)
+    def _compute_statistics(self, title, today_price, product_type, filter_date):
+        _, _, price, timestamp, _ = self._retrieve_cheapest(product_type, filter_date)
+        evolution_rate = self._compute_evolution_rate(today_price, price)
         percentage = self._stringify_evolution_rate(evolution_rate)
         trend = self._deduce_trend(evolution_rate)
-        trend_line = f"{title}: {trend} {percentage}"
+        trend_line = f"{title}: {trend} {percentage} ({price}€) {convert_datetime_to_date(timestamp)}"
         return trend_line
 
     def main_loop(self):
