@@ -22,44 +22,29 @@ class TestAbstractFetcher(unittest.TestCase):
     def test_no_data_case(self):
         self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
 
+    def create_basic_post(self):
+        return {"product_name":  "Cheapest 2080 TI",
+                "product_brand": "ASUS",
+                "product_type":  "2080 TI",
+                "product_price": 900.0,
+                "source":        "Vendor",
+                "url":           "http://www.vendor.com"}
+
     def test_only_yesterday_post_case(self):
-        """
-        Only yesterday data
-        """
-        post = {"product_name":  "Cheapest 2080 TI",
-                "product_brand": "ASUS",
-                "product_type":  "2080 TI",
-                "product_price": 900.0,
-                "source":        "Vendor",
-                "url":           "http://www.vendor.com",
-                "timestamp":     get_yesterday_datetime()}
-        self.db.collection.insert_one(post)
+        yesterday_post = self.create_basic_post()
+        yesterday_post["timestamp"] = get_yesterday_datetime()
+        self.db.collection.insert_one(yesterday_post)
         self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
 
     def test_only_today_post_case(self):
-        """
-        Only yesterday data
-        """
-        post = {"product_name":  "Cheapest 2080 TI",
-                "product_brand": "ASUS",
-                "product_type":  "2080 TI",
-                "product_price": 900.0,
-                "source":        "Vendor",
-                "url":           "http://www.vendor.com",
-                "timestamp":     get_today_datetime()}
-        self.db.collection.insert_one(post)
+        today_post = self.create_basic_post()
+        today_post["timestamp"] = get_today_datetime()
+        self.db.collection.insert_one(today_post)
         self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
 
-    def test_only_today_post_case(self):
-        """
-        Only yesterday data
-        """
-        post = {"product_name":  "Cheapest 2080 TI",
-                "product_brand": "ASUS",
-                "product_type":  "2080 TI",
-                "product_price": 900.0,
-                "source":        "Vendor",
-                "url":           "http://www.vendor.com",
-                "timestamp":     get_today_datetime()}
-        self.db.collection.insert_one(post)
-        self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
+    def test_yesterday_and_today_post_case(self):
+        posts = [self.create_basic_post(), self.create_basic_post()]
+        posts[0]["timestamp"] = get_yesterday_datetime()
+        posts[1]["timestamp"] = get_today_datetime()
+        self.db.collection.insert_many(posts)
+        self.fetcher._format_cheapest_product_tweet("2080 TI")
