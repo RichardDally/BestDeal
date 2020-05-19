@@ -29,8 +29,8 @@ class AbstractFetcher:
         """
         self.database = database
         self.wait_in_seconds = 900
-        self.fetch_prices = False
-        self.display_lowest = False
+        self.fetch_prices = True
+        self.display_lowest = True
         self.tweet_products = True
 
     @abstractmethod
@@ -83,7 +83,7 @@ class AbstractFetcher:
         for product_type in self._get_tweeted_product_types():
             try:
                 tweet_text = self._format_cheapest_product_tweet(product_type)
-                # tweet(tweet_text)
+                tweet(tweet_text)
             except Exception as exception:
                 logger.exception(exception)
 
@@ -121,12 +121,16 @@ class AbstractFetcher:
         return trend
 
     def _compute_statistics(self, title, today_price, product_type, filter_date):
-        _, _, price, timestamp, _ = self._retrieve_cheapest(product_type, filter_date)
-        evolution_rate = self._compute_evolution_rate(today_price, price)
-        percentage = self._stringify_evolution_rate(evolution_rate)
-        trend = self._deduce_trend(evolution_rate)
-        trend_line = f"{title}: {trend} {percentage} ({price}€) {convert_datetime_to_date(timestamp)}"
-        return trend_line
+        try:
+            _, _, price, timestamp, _ = self._retrieve_cheapest(product_type, filter_date)
+            evolution_rate = self._compute_evolution_rate(today_price, price)
+            percentage = self._stringify_evolution_rate(evolution_rate)
+            trend = self._deduce_trend(evolution_rate)
+            trend_line = f"{title}: {trend} {percentage} ({price}€) {convert_datetime_to_date(timestamp)}"
+            return trend_line
+        except Exception as exception:
+            logger.warning(f"Unable to compute statistics for [{product_type}] [{filter_date}]. Exception [{exception}]")
+            return None
 
     def main_loop(self):
         try:
