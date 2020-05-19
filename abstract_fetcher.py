@@ -1,11 +1,9 @@
-# coding: utf-8
-
 import re
 import time
 from pricedatabase import PriceDatabase
 from abc import ABCMeta, abstractmethod
 from source import Source
-from typing import Optional, Dict, Tuple, List, Iterable, NamedTuple
+from typing import Optional, Dict, Tuple, List, Iterable
 from loguru import logger
 from toolbox import convert_datetime_to_date
 from toolbox import get_north_east_arrow
