@@ -22,7 +22,8 @@ class TestAbstractFetcher(unittest.TestCase):
     def test_no_data_case(self):
         self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
 
-    def create_basic_post(self):
+    @staticmethod
+    def create_basic_post():
         return {"product_name":  "Cheapest 2080 TI",
                 "product_brand": "ASUS",
                 "product_type":  "2080 TI",
