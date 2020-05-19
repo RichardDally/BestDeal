@@ -40,7 +40,7 @@ class TestAbstractFetcher(unittest.TestCase):
         today_post = self.create_basic_post()
         today_post["timestamp"] = get_today_datetime()
         self.db.collection.insert_one(today_post)
-        self.assertRaises(Exception, self.fetcher._format_cheapest_product_tweet, "2080 TI")
+        self.fetcher._format_cheapest_product_tweet("2080 TI")
 
     def test_yesterday_and_today_post_case(self):
         posts = [self.create_basic_post(), self.create_basic_post()]
