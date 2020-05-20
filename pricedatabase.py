@@ -53,7 +53,7 @@ class PriceDatabase:
         for post in second_cursor.limit(1):
             return post
         # TODO: implement specific exception
-        raise Exception("Missing cheapest")
+        raise Exception(f"Missing cheapest [{product_type}]")
 
     def delete_price_anomalies(self) -> None:
         """
