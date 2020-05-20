@@ -242,7 +242,7 @@ class AbstractFetcher:
                 cheapest = self.database.find_cheapest(product_type, today_date)
                 cheapest_products.append(cheapest)
             except Exception as exception:
-                logger.exception(exception)
+                logger.warning(exception)
                 continue
         max_lengths = {}
         for product in cheapest_products:
