@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from dotenv import load_dotenv
 from abstract_fetcher import AbstractFetcher
 from topachat import TopAchat
@@ -24,14 +22,11 @@ class NVidiaFetcher(AbstractFetcher):
         Return product types you want to appear in tweets (one for each)
         To tweet about all product types: self.database.find_distinct_product_types()
         """
-        return ["2080", "2080 SUPER", "2080 TI"]
+        return ["2070", "2080", "2080 SUPER", "2080 TI"]
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
             TopAchat: {
-                '1660 SUPER': 'https://bit.ly/2CJDkOi',
-                '1660': 'https://bit.ly/2FLwEld',
-                '1660 TI': 'https://bit.ly/2uzOWiG',
                 '2060': 'https://bit.ly/2CMzlkr',
                 '2070': 'https://bit.ly/2FMNlg0',
                 '2080': 'https://bit.ly/2JQck65',
@@ -48,10 +43,6 @@ class NVidiaFetcher(AbstractFetcher):
                 # "2080 TI": "https://www.rueducommerce.fr/rayon/composants-16/carte-graphique-nvidia-1913?sort=prix-croissants&view=list&marchand=rue-du-commerce&it_card_chipset_serie=geforce-rtx-2080-ti"
             },
             Cybertek: {
-                '1060 6GB': 'https://bit.ly/2OyuckC',
-                '1660': 'https://bit.ly/2uL1bJH',
-                '1660 TI': 'https://bit.ly/2YHhJjx',
-                '1660 SUPER': 'https://bit.ly/2OMkPyq',
                 '2060': 'https://bit.ly/2OITRYd',
                 '2060 SUPER': 'https://bit.ly/2OSyMe2',
                 '2070': 'https://bit.ly/2FElIo5',
@@ -61,9 +52,6 @@ class NVidiaFetcher(AbstractFetcher):
                 '2080 Ti': 'https://bit.ly/2JSMgaD',
             },
             LDLC: {
-                '1660': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17465.html',
-                '1660 TI': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17425.html',
-                '1660 SUPER': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-18053.html',
                 '2060': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17312.html',
                 '2060 SUPER': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17729.html',
                 '2070': 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-16760.html',
@@ -99,10 +87,10 @@ class NVidiaFetcher(AbstractFetcher):
             'INNO3D',
         ]
         lineup_type = ['TI', 'SUPER']
-        standard_lineup = ['1050', '1060', '1660', '1070', '1080', '2060', '2070', '2080', '3070', '3080']
+        standard_lineup = ['2060', '2070', '2080', '3060', '3070', '3080']
         higher_lineup = {
-            'TI': ['1050', '1660', '2080', '3080'],
-            'SUPER': ['1660', '2060', '2070', '2080']
+            'TI': ['2080', '3080'],
+            'SUPER': ['2060', '2070', '2080', '3080']
         }
 
         brand = self.find_exactly_one_element(brands, product_description)
