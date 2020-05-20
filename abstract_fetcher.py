@@ -186,15 +186,20 @@ class AbstractFetcher:
                     if product_type is None:
                         continue
 
-                    last_price = None
-                    last_update = self.database.find_last_price(product_name, get_today_date())
-                    if last_update:
+                    try:
+                        last_update = self.database.find_last_price(product_name, get_today_date())
                         last_price = last_update["product_price"]
                         if last_price == float(product_price):
                             continue
+                        previous_today_price = f"(previous [{last_price}])"
+                    except Exception:
+                        """ First price of the day """
+                        previous_today_price = None
 
-                    previous_price = f"(previous [{last_price}])" if last_price else ""
-                    logger.info(f"New price for [{product_name}] [{product_price}] {previous_price}")
+                    if previous_today_price:
+                        logger.info(f"New price for [{product_name}] [{product_price}] {previous_today_price}")
+                    else:
+                        logger.info(f"First today price for [{product_name}] [{product_price}]")
 
                     post = {"product_name": product_name,
                             "product_brand": brand,
