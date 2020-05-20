@@ -33,7 +33,7 @@ class Source:
         Specific parsing is done in _enrich_deals_from_soup method.
         """
         deals = {}
-        html = requests.get(url=url, headers=self.headers)
+        html = requests.get(url=url, headers=self.headers, timeout=30.0)
         soup = bs4.BeautifulSoup(html.text, 'html.parser')
         current_deal_count = len(deals)
         self._enrich_deals_from_soup(soup, deals)
