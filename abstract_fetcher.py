@@ -1,5 +1,6 @@
 import re
 import time
+from more_exceptions import SkipTweet
 from pricedatabase import PriceDatabase
 from abc import ABCMeta, abstractmethod
 from source import Source
@@ -62,6 +63,11 @@ class AbstractFetcher:
     def _format_cheapest_product_tweet(self, product_type: str) -> str:
         name, brand, price, _, url = self._retrieve_cheapest(product_type, get_today_date())
         yesterday_comparison = self._compute_statistics("Compared to yesterday", price, product_type, get_yesterday_date())
+
+        if "stable" in yesterday_comparison:
+            logger.debug("Price from yesterday is stable, skip the tweet.")
+            raise SkipTweet()
+
         cheapest_ever_comparison = self._compute_statistics("Compared to cheapest ever", price, product_type, None)
 
         tweet_text = \
@@ -82,6 +88,8 @@ class AbstractFetcher:
             try:
                 tweet_text = self._format_cheapest_product_tweet(product_type)
                 tweet(tweet_text)
+            except SkipTweet:
+                continue
             except Exception as exception:
                 logger.exception(exception)
 

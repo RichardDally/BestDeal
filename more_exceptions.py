@@ -1,0 +1,2 @@
+class SkipTweet(Exception):
+    pass
