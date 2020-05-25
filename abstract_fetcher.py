@@ -86,8 +86,13 @@ class AbstractFetcher:
     def _tweet_products(self):
         for product_type in self._get_tweeted_product_types():
             try:
-                tweet_text = self._format_cheapest_product_tweet(product_type)
-                tweet(tweet_text)
+                # One tweet per day.
+                if not self.database.tweet_exists(product_type):
+                    tweet_text = self._format_cheapest_product_tweet(product_type)
+                    tweet(tweet_text)
+                    self.database.insert_tweet_status(product_type)
+                else:
+                    logger.info(f"A tweet has been already created today for [{product_type}], skipping.")
             except SkipTweet:
                 continue
             except Exception as exception:

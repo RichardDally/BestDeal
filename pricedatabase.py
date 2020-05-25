@@ -4,6 +4,7 @@ import os
 from pymongo import MongoClient, ASCENDING
 from typing import Optional
 from loguru import logger
+from toolbox import get_today_date
 
 
 class PriceDatabase:
@@ -21,6 +22,18 @@ class PriceDatabase:
             self.client = MongoClient(os.environ.get("MONGODB_CONNECTION_STRING"))
         self.database = self.client[self.database_name]
         self.collection = self.database[collection_name]
+        self.tweet_collection = self.database["Tweet"]
+
+    def tweet_exists(self, product_type: str):
+        today_date = get_today_date()
+        cursor = self.tweet_collection.find({"product_type": product_type, "date": today_date})
+        return cursor.count() == 1
+
+    def insert_tweet_status(self, product_type: str):
+        today_date = get_today_date()
+        post = {"product_type":  product_type,
+                "date":          today_date}
+        self.tweet_collection.insert(post)
 
     def bulk_insert(self, posts):
         logger.debug(f"Inserting [{len(posts)}] posts")
