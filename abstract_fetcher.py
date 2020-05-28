@@ -25,12 +25,14 @@ class AbstractFetcher:
         fetch_prices: scrap data from vendors
         display_lowest: display lowest prices for all product types
         tweet_products: publish on Twitter lowest prices
+        yesterday_rate_throttle: tweet only if price rate is greater than throttle
         """
         self.database = database
         self.wait_in_seconds = 900
         self.fetch_prices = True
         self.display_lowest = True
         self.tweet_products = True
+        self.yesterday_rate_throttle = 1.5
 
     @abstractmethod
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
@@ -62,13 +64,18 @@ class AbstractFetcher:
 
     def _format_cheapest_product_tweet(self, product_type: str) -> str:
         name, brand, price, _, url = self._retrieve_cheapest(product_type, get_today_date())
-        yesterday_comparison = self._compute_statistics("Compared to yesterday", price, product_type, get_yesterday_date())
+        yesterday_comparison, yesterday_rate = self._compute_statistics("Compared to yesterday", price, product_type, get_yesterday_date())
 
-        if "stable" in yesterday_comparison:
+        if yesterday_comparison and "stable" in yesterday_comparison:
             logger.debug("Price from yesterday is stable, skip the tweet.")
             raise SkipTweet()
 
-        cheapest_ever_comparison = self._compute_statistics("Compared to cheapest ever", price, product_type, None)
+        if self.yesterday_rate_throttle:
+            if yesterday_rate and abs(yesterday_rate) <= self.yesterday_rate_throttle:
+                logger.info(f"Price rate is lesser then [{self.yesterday_rate_throttle}], skip the tweet.")
+                raise SkipTweet()
+
+        cheapest_ever_comparison, _ = self._compute_statistics("Compared to cheapest ever", price, product_type, None)
 
         tweet_text = \
             f"{product_type} lowest price (#{brand})\n" \
@@ -99,19 +106,15 @@ class AbstractFetcher:
                 logger.exception(exception)
 
     @staticmethod
-    def _compute_evolution_rate(today_price: Optional[float], reference_price: Optional[float]) -> Optional[float]:
-        rate = None
+    def _compute_evolution_rate(today_price: Optional[float], reference_price: Optional[float]) -> float:
         if today_price and reference_price:
-            rate = ((today_price - reference_price) / reference_price) * 100
-        else:
-            logger.warning(f"Cannot compare today price [{today_price}] with reference price [{reference_price}]")
-        return rate
+            return ((today_price - reference_price) / reference_price) * 100
+        raise Exception(f"Cannot compare today price [{today_price}] with reference price [{reference_price}]")
+
 
     @staticmethod
-    def _stringify_evolution_rate(evolution_rate: Optional[float]) -> str:
-        if evolution_rate is None:
-            percentage = "Missing data"
-        elif evolution_rate > 0.:
+    def _stringify_evolution_rate(evolution_rate: float) -> str:
+        if evolution_rate > 0.:
             percentage = f"+{round(evolution_rate, 2)}%"
         elif evolution_rate < 0.:
             percentage = f"{round(evolution_rate, 2)}%"
@@ -120,10 +123,8 @@ class AbstractFetcher:
         return percentage
 
     @staticmethod
-    def _deduce_trend(evolution_rate: Optional[float]) -> str:
-        if evolution_rate is None:
-            trend = get_see_no_evil_monkey_emoji()
-        elif evolution_rate > 0.:
+    def _deduce_trend(evolution_rate: float) -> str:
+        if evolution_rate > 0.:
             trend = get_north_east_arrow()
         elif evolution_rate < 0.:
             trend = get_south_east_arrow()
@@ -131,17 +132,17 @@ class AbstractFetcher:
             trend = get_rightwards_arrow()
         return trend
 
-    def _compute_statistics(self, title, today_price, product_type, filter_date):
+    def _compute_statistics(self, title, today_price, product_type, filter_date) -> Tuple[Optional[str], Optional[float]]:
         try:
             _, _, price, timestamp, _ = self._retrieve_cheapest(product_type, filter_date)
             evolution_rate = self._compute_evolution_rate(today_price, price)
             percentage = self._stringify_evolution_rate(evolution_rate)
             trend = self._deduce_trend(evolution_rate)
             trend_line = f"{title}: {trend} {percentage} ({price}€) {convert_datetime_to_date(timestamp)}"
-            return trend_line
+            return trend_line, evolution_rate
         except Exception as exception:
             logger.warning(f"Unable to compute statistics for [{product_type}] [{filter_date}]. Exception [{exception}]")
-            return None
+            return None, None
 
     def main_loop(self):
         try:
