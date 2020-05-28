@@ -10,7 +10,6 @@ from toolbox import convert_datetime_to_date
 from toolbox import get_north_east_arrow
 from toolbox import get_south_east_arrow
 from toolbox import get_rightwards_arrow
-from toolbox import get_see_no_evil_monkey_emoji
 from toolbox import get_today_date, get_today_datetime, get_yesterday_date
 from publish import tweet
 
