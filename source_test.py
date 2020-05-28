@@ -1,11 +1,9 @@
-# coding: utf-8
-
 import pytest
-from nvidia_fetcher import NVidiaFetcher
+from gpu_fetcher import GpuFetcher
 from topachat import TopAchat
 
 
-@pytest.mark.parametrize("fetcher_class", [NVidiaFetcher])
+@pytest.mark.parametrize("fetcher_class", [GpuFetcher])
 @pytest.mark.parametrize("source_class", [TopAchat])
 def test_source(fetcher_class, source_class):
     """

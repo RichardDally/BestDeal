@@ -47,5 +47,6 @@ class TestAbstractFetcher(unittest.TestCase):
         posts = [self.create_basic_post(), self.create_basic_post()]
         posts[0]["timestamp"] = get_yesterday_datetime()
         posts[1]["timestamp"] = get_today_datetime()
+        posts[1]["product_price"] = posts[0]["product_price"] * 2
         self.db.collection.insert_many(posts)
         self.fetcher._format_cheapest_product_tweet("2080 TI")
