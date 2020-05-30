@@ -1,9 +1,8 @@
 BestDeal Project
 =======================
 
-Easily compare your most wanted products among your favorite vendors to buy cheapest.
-
-Currently it implements a comparator of NVidia graphic cards among multiple hardware vendors.
+Easily compare your most wanted products among your favorite vendors to buy cheapest.<br>
+Currently it implements a comparator of GPU and CPU among multiple European hardware vendors.<br>
 
 <img src='https://github.com/RichardDally/BestDeal/blob/master/screenshots/GTX2080_20181202.png' style='width:334px; height:306px; float: right;'>
 
@@ -29,19 +28,20 @@ Master branch:
 
 ### Requirements
 
-- MongoDB (persistent storage)
-- BeautifulSoup (html parsing)
-- Loguru (logging)
-- Tweepy (twitter api)
-- Python-Dotenv (secrets management)
-- Dash (web frontend)
+- pymongo (MongoDB persistent storage)
+- loguru (logging)
+- tweepy (twitter api)
+- python-dotenv (secrets management)
+- pytest (unit testing)
+- ~~beautifulsoup4 (html parsing)~~
+- ~~dash (web frontend)~~
 
 ### Usage
 
-#### Looking for GPU (NVidia only for the moment)
+#### Looking for GPU or CPU ?
 
 1. Create your [.env file](https://github.com/theskumar/python-dotenv) containing MongoDB credentials (e.g. MONGODB_CONNECTION_STRING=mongodb://localhost:27017)
-2. Run nvidia_fetcher.py to feed price database (powered by [MongoDB](https://docs.mongodb.com)).
+2. Run cpu_fetcher.py or gpu_fetcher.py to feed price database (powered by [MongoDB](https://docs.mongodb.com)).
 3. Analyze and profit !
 
 ### MongoDB basics
@@ -49,7 +49,6 @@ Master branch:
 List all databases:
 
     > show dbs
-
 
 Switch to `PriceHistorization` database:
 
