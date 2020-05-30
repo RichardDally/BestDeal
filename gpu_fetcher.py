@@ -5,7 +5,6 @@ from grosbill import GrosBill
 from rueducommerce import RueDuCommerce
 from cybertek import Cybertek
 from ldlc import LDLC
-from mindfactory import MindFactory
 from materiel import Materiel
 from loguru import logger
 from typing import Dict, Tuple, Optional, List
@@ -82,14 +81,6 @@ class GpuFetcher(AbstractFetcher):
                 "2080 SUPER": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17731.html",
                 "2080 Ti": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-16759.html",
                 "RADEON": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+fdi-1+fi131-l4h8+foms-1+fv1026-5800+fv121-15666,15667,17714,17715,18248,18293.html?sort=1"
-            },
-            MindFactory:
-            {
-                "2060": "https://bit.ly/2smzDw7",
-                "2070": "https://bit.ly/2DnaWlA",
-                "2080": "https://bit.ly/33kaTRP",
-                "2080 TI": "https://bit.ly/35EpY2h",
-                "RADEON": "https://www.mindfactory.de/Hardware/Grafikkarten+(VGA)/Radeon+RX+Serie.html"
             },
             Materiel:
             {
