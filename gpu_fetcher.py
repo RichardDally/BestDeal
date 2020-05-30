@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from abstract_fetcher import AbstractFetcher
 from topachat import TopAchat
 from grosbill import GrosBill
+from pcw import PCW
 from rueducommerce import RueDuCommerce
 from cybertek import Cybertek
 from ldlc import LDLC
@@ -40,6 +41,10 @@ class GpuFetcher(AbstractFetcher):
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
+            PCW: {
+                "RADEON": "https://www.pcw.fr/232-amd-radeon",
+                "RTX": "https://www.pcw.fr/210-nvidia-geforce-rtx",
+            },
             TopAchat:
             {
                 "2060": "https://bit.ly/2CMzlkr",
