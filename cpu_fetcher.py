@@ -5,7 +5,6 @@ from grosbill import GrosBill
 from cybertek import Cybertek
 from ldlc import LDLC
 from pcw import PCW
-from mindfactory import MindFactory
 from loguru import logger
 from typing import Dict, Tuple, Optional, List
 from source import Source
@@ -45,10 +44,6 @@ class CpuFetcher(AbstractFetcher):
             LDLC: {
                 "Intel Core": "https://www.ldlc.com/informatique/pieces-informatique/processeur/c4300/+fb-C000000192+fdi-1+foms-1+fv579-3857,5524,5912,6023,6114,7779,15953.html?sort=1",
                 "AMD Ryzen": "https://www.ldlc.com/informatique/pieces-informatique/processeur/c4300/+fv579-15490,15637,16016,17684.html?sort=1"
-            },
-            MindFactory: {
-                "Intel Core": "https://www.mindfactory.de/Hardware/Prozessoren+(CPU)/INTEL+Desktop.html",
-                "AMD Ryzen": "https://www.mindfactory.de/search_result.php/search_query/AMD+RYZEN/Hardware/Prozessoren+(CPU).html"
             },
         }
 
