@@ -1,7 +1,7 @@
 FROM richarddally/cpython:3.8.2_18.04
 
 # Install MongoDB
-RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' > tee /etc/apt/sources.list.d/mongodb.list
+RUN echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" > /etc/apt/sources.list.d/mongodb.list
 RUN apt-get update
 
 # Install MongoDB package (.deb)
