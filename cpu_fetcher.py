@@ -4,6 +4,7 @@ from topachat import TopAchat
 from grosbill import GrosBill
 from cybertek import Cybertek
 from ldlc import LDLC
+from pcw import PCW
 from loguru import logger
 from typing import Dict, Tuple, Optional, List
 from source import Source
@@ -26,6 +27,11 @@ class CpuFetcher(AbstractFetcher):
             TopAchat: {
                 "INTEL": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wpr_puis_marque_est_INTEL.html",
                 "AMD": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wpr_puis_ordre_est_P_puis_sens_est_ASC_puis_f_est_3-63|557-8865,8660,8617,10578.html",
+            },
+            PCW: {
+                "INTEL": "https://www.pcw.fr/204-intel?order=product.price.asc",
+                "AMD": "https://www.pcw.fr/231-amd",
+                "RTX": "https://www.pcw.fr/210-nvidia-geforce-rtx"
             },
             GrosBill: {
                 "INTEL": "https://www.grosbill.com/2-processeur_intel-cat-informatique?page=1&tri=w&filtre_page=100&mode=listing&filtre_type_produit=processeur",
