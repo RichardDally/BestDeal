@@ -20,7 +20,7 @@ class CpuFetcher(AbstractFetcher):
         Return product types you want to appear in tweets (one for each)
         To tweet about all product types: self.database.find_distinct_product_types()
         """
-        return ["RYZEN 5 3600X", "RYZEN 7 3700X", "RYZEN 9 3950X", "CORE I9 9900KF", "CORE I9 9900K"]
+        return ["RYZEN 5 3600X", "RYZEN 9 3900X"]
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
