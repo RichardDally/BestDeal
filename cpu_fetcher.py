@@ -73,11 +73,10 @@ class CpuFetcher(AbstractFetcher):
 
     def _extract_amd_product_data(self, product_description) -> Tuple[Optional[str], Optional[str]]:
         brand = "AMD"
-        brands = {"AMD": ["Ryzen 3", "Ryzen 5", "Ryzen 7", "Ryzen 9"]}
+        brands = {"AMD": ["Ryzen 5", "Ryzen 7", "Ryzen 9"]}
         families = {
-            "RYZEN 3": ["3200G"],
-            "RYZEN 5": ["1600 AF", "1600X", "2600X", "2600", "1400", "3600X", "3600"],
-            "RYZEN 7": ["2700X", "3700X", "3800X"],
+            "RYZEN 5": ["3600X", "3600"],
+            "RYZEN 7": ["3700X", "3800X"],
             "RYZEN 9": ["3900X", "3950X"],
         }
         return self._get_brand_and_product_type(product_description, brand, brands, families)
