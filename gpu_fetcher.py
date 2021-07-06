@@ -36,7 +36,7 @@ class GpuFetcher(AbstractFetcher):
         Return product types you want to appear in tweets (one for each)
         To tweet about all product types: self.database.find_distinct_product_types()
         """
-        return ["2070 SUPER", "2080 SUPER", "2080 TI", "5700 XT", "3070", "3080", "3090"]
+        return ["3070 TI", "3080", "3080 TI", "3090"]
 
     def _get_source_product_urls(self) -> Dict[type(Source), Dict[str, str]]:
         return {
@@ -46,19 +46,19 @@ class GpuFetcher(AbstractFetcher):
             },
             TopAchat:
             {
-                "2060": "https://bit.ly/2CMzlkr",
+                # "2060": "https://bit.ly/2CMzlkr",
                 #"2070": "https://bit.ly/2FMNlg0",
                 #"2080": "https://bit.ly/2JQck65",
-                "2060 Super": "https://bit.ly/2Y1r2NL",
-                "2070 Super": "https://bit.ly/2YRb8Tj",
+                # "2060 Super": "https://bit.ly/2Y1r2NL",
+                # "2070 Super": "https://bit.ly/2YRb8Tj",
                 #"2080 Super": "https://bit.ly/2Yp0AJT",
                 #"2080 TI": "https://bit.ly/2TG5EXT",
-                "RTX 3 Stock": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_f_est_58-11447,11445,11446|s-1.html",
+                "RTX 3 Stock": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_f_est_58-11447,11884,11445,11883,11446|s-1.html",
                 "RADEON": "https://www.topachat.com/pages/produits_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_f_est_58-8743,10812,10851,8741,10586,10587,8742.html"
             },
             GrosBill:
             {
-                "Nvidia": "https://www.grosbill.com/3-carte_graphique-nvidia-type-informatique?page=1&tri=P&filtre_page=100&mode=listing&filtre_type_produit=carte_graphique#amp;amp;&filtre_mini=-1&filtre_maxi=-1&filters=47357+47455+47291+47181+47203+47657+47626",
+                "Nvidia": "https://www.grosbill.com/2-carte_graphique-cat-informatique?tri=P&filtre_page=100&mode=listing&filtre_type_produit=carte_graphique&crits=4533%3a4145%3a4530%3a4146%3a3013",
                 "RADEON": "https://www.grosbill.com/3-carte_graphique-ati-type-informatique?page=1&tri=P&filtre_page=100&mode=listing&filtre_type_produit=carte_graphique"
             },
             RueDuCommerce:
@@ -68,14 +68,14 @@ class GpuFetcher(AbstractFetcher):
             },
             Cybertek:
             {
-                "2060": "https://bit.ly/2OITRYd",
-                "2060 SUPER": "https://bit.ly/2OSyMe2",
-                "2070": "https://bit.ly/2FElIo5",
-                "2070 SUPER": "https://bit.ly/2rzczcX",
-                "2080": "https://bit.ly/2TIQ4uM",
-                "2080 SUPER": "https://bit.ly/2qOGE8y",
-                "2080 Ti": "https://bit.ly/2JSMgaD",
-                "RTX 3 Stock": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4144%3a4145%3a4146",
+                # "2060": "https://bit.ly/2OITRYd",
+                # "2060 SUPER": "https://bit.ly/2OSyMe2",
+                # "2070": "https://bit.ly/2FElIo5",
+                # "2070 SUPER": "https://bit.ly/2rzczcX",
+                # "2080": "https://bit.ly/2TIQ4uM",
+                # "2080 SUPER": "https://bit.ly/2qOGE8y",
+                # "2080 Ti": "https://bit.ly/2JSMgaD",
+                "RTX 3 Stock": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4533%3a4145%3a4530%3a4146",
                 "RADEON": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4053%3a4084%3a3707%3a3990%3a3991%3a3708&order=p%3aa%3b"
             },
             LDLC:
@@ -87,7 +87,7 @@ class GpuFetcher(AbstractFetcher):
                 "2080": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-16758.html",
                 "2080 SUPER": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-17731.html",
                 "2080 Ti": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+foms-1+fv1026-5801+fv121-16759.html",
-                "RTX 3 Stock": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+fdi-1+fv1026-5801+fv121-19183,19184,19185.html",
+                "RTX 3 Stock": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+fdi-1+fv1026-5801+fv121-19183,19185,19800,19801.html",
                 "RADEON": "https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+fdi-1+fi131-l4h8+foms-1+fv1026-5800+fv121-15666,15667,17714,17715,18248,18293.html?sort=1"
             },
             Materiel:
@@ -128,12 +128,12 @@ class GpuFetcher(AbstractFetcher):
         return self._get_brand_and_product_type(product_description, lineup_type, standard_lineup, higher_lineup)
 
     def _extract_nvidia_product_data(self, product_description: str) -> Tuple[Optional[str], Optional[str]]:
-        lineup_type = ["TI", "SUPER"]
         standard_lineup = ["2060", "2070", "2080", "3060", "3070", "3080", "3090"]
         higher_lineup = {
-            "TI": ["2080", "3060"],
-            "SUPER": ["2060", "2070", "2080", "3080"]
+            "TI": ["2080", "3070", "3080"],
+            "SUPER": ["2060", "2070", "2080"]
         }
+        lineup_type = list(higher_lineup.keys())
         return self._get_brand_and_product_type(product_description, lineup_type, standard_lineup, higher_lineup)
 
     def _extract_product_data(self, product_description: str) -> Tuple[Optional[str], Optional[str]]:
