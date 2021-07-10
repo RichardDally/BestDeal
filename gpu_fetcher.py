@@ -75,7 +75,7 @@ class GpuFetcher(AbstractFetcher):
                 # "2080": "https://bit.ly/2TIQ4uM",
                 # "2080 SUPER": "https://bit.ly/2qOGE8y",
                 # "2080 Ti": "https://bit.ly/2JSMgaD",
-                "RTX 3 Stock": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4533%3a4145%3a4530%3a4146",
+                "RTX 3 Stock": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4533%3a4145%3a4530%3a4146&order=p%3aa%3b",
                 "RADEON": "https://www.cybertek.fr/carte-graphique-6.aspx?crits=4053%3a4084%3a3707%3a3990%3a3991%3a3708&order=p%3aa%3b"
             },
             LDLC:
