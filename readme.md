@@ -12,19 +12,15 @@ BestDeal provides you a visualization tool to anticipate best timing to buy.
 
 Master branch:
 
-
-[![Build Status](https://travis-ci.org/RichardDally/BestDeal.svg?branch=master)](https://travis-ci.org/RichardDally/BestDeal)
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/09178071e8a8453fa2acc6d47a4937aa)](https://www.codacy.com/manual/RichardDally/BestDeal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RichardDally/BestDeal&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/RichardDally/BestDeal.svg?branch=master)](https://travis-ci.org/RichardDally/BestDeal) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/09178071e8a8453fa2acc6d47a4937aa)](https://www.codacy.com/manual/RichardDally/BestDeal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RichardDally/BestDeal&amp;utm_campaign=Badge_Grade)
 
 
 ### Requirements
 
-[Python 3.6+](https://www.python.org/downloads/)
-
-[External modules (requirements)](requirements.txt)
-
-[How to install requirements with pip ?](https://stackoverflow.com/a/39537053/5037799)
+- [Python 3.6+](https://www.python.org/downloads/)
+- [Production requirements](requirements.txt)
+- [Development requirements](requirements.dev.txt)
+- [How to install requirements with pip ?](https://stackoverflow.com/a/39537053/5037799)
 
 ### Usage
 

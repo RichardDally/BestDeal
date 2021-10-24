@@ -1,10 +1,8 @@
+loguru==0.5.3
 beautifulsoup4==4.6.3
 requests==2.20.0
-dash==0.43.0
-loguru==0.2.5
-pymongo==3.9.0
+pymongo==3.12.1
 dnspython
 tweepy==3.8.0
 python-dotenv==0.10.5
-pymongo_inmemory
 streamlit==1.1.0
