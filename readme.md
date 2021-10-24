@@ -1,4 +1,4 @@
-BestDeal Project
+BestDeal
 =======================
 
 Compare your most wanted products among your favorite vendors to buy cheapest.<br>
