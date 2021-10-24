@@ -1,8 +1,8 @@
 import pytest
 import unittest
-from toolbox import get_today_datetime, get_yesterday_datetime
-from abstract_fetcher import AbstractFetcher
-from pricedatabase import PriceDatabase
+from bestdeal.core.toolbox import get_today_datetime, get_yesterday_datetime
+from bestdeal.backend.abstract_fetcher import AbstractFetcher
+from bestdeal.core.pricedatabase import PriceDatabase
 from pymongo_inmemory import MongoClient
 
 
@@ -26,12 +26,14 @@ class TestAbstractFetcher(unittest.TestCase):
 
     @staticmethod
     def create_basic_post():
-        return {"product_name":  "Cheapest 2080 TI",
-                "product_brand": "ASUS",
-                "product_type":  "2080 TI",
-                "product_price": 900.0,
-                "source":        "Vendor",
-                "url":           "http://www.vendor.com"}
+        return {
+            "product_name":  "Cheapest 2080 TI",
+            "product_brand": "ASUS",
+            "product_type":  "2080 TI",
+            "product_price": 900.0,
+            "source":        "Vendor",
+            "url":           "http://www.vendor.com"
+        }
 
     def test_only_yesterday_post_case(self):
         yesterday_post = self.create_basic_post()

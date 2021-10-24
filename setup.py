@@ -8,14 +8,14 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     author="Richard Dally",
-    name="best-deal-package_richard-dally",
+    name="bestdeal",
     version="1.0.0",
     description="Find lowest price across many vendors",
     url="https://github.com/RichardDally/BestDeal",
     license="GNU Lesser General Public License v3.0",
     install_requires=requirements,
     packages=setuptools.find_packages(),
-    author_email="r.dally@protonmail.com",
+    author_email="r.dally@pm.me",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[

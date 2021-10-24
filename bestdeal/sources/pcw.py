@@ -1,6 +1,6 @@
-from source import Source
-from toolbox import clean_price
 from loguru import logger
+from bestdeal.core.source import Source
+from bestdeal.core.toolbox import clean_price
 
 
 class PCW(Source):

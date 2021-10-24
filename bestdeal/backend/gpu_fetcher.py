@@ -1,16 +1,16 @@
-from dotenv import load_dotenv
-from abstract_fetcher import AbstractFetcher
-from topachat import TopAchat
-from grosbill import GrosBill
-from pcw import PCW
-from rueducommerce import RueDuCommerce
-from cybertek import Cybertek
-from ldlc import LDLC
-from materiel import Materiel
 from loguru import logger
+from dotenv import load_dotenv
 from typing import Dict, Tuple, Optional, List
-from source import Source
-from pricedatabase import PriceDatabase
+from bestdeal.backend.abstract_fetcher import AbstractFetcher
+from bestdeal.sources.topachat import TopAchat
+from bestdeal.sources.grosbill import GrosBill
+from bestdeal.sources.pcw import PCW
+from bestdeal.sources.rueducommerce import RueDuCommerce
+from bestdeal.sources.cybertek import Cybertek
+from bestdeal.sources.ldlc import LDLC
+from bestdeal.sources.materiel import Materiel
+from bestdeal.core.source import Source
+from bestdeal.core.pricedatabase import PriceDatabase
 
 
 class GpuFetcher(AbstractFetcher):

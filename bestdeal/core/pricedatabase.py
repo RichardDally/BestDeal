@@ -4,7 +4,7 @@ import os
 from pymongo import MongoClient, ASCENDING
 from typing import Optional
 from loguru import logger
-from toolbox import get_today_date
+from bestdeal.core.toolbox import get_today_date
 
 
 class PriceDatabase:

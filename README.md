@@ -1,7 +1,7 @@
 BestDeal Project
 =======================
 
-Easily compare your most wanted products among your favorite vendors to buy cheapest.<br>
+Compare your most wanted products among your favorite vendors to buy cheapest.<br>
 Currently it implements a comparator of GPU and CPU among multiple European hardware vendors.<br>
 
 <img src='https://github.com/RichardDally/BestDeal/blob/master/screenshots/GTX2080_20181202.png' style='width:334px; height:306px; float: right;'>
@@ -25,16 +25,6 @@ Master branch:
 [External modules (requirements)](requirements.txt)
 
 [How to install requirements with pip ?](https://stackoverflow.com/a/39537053/5037799)
-
-### Requirements
-
-- pymongo (MongoDB persistent storage)
-- loguru (logging)
-- tweepy (twitter api)
-- python-dotenv (secrets management)
-- pytest (unit testing)
-- ~~beautifulsoup4 (html parsing)~~
-- ~~dash (web frontend)~~
 
 ### Usage
 
@@ -96,6 +86,3 @@ Play with publish.py module
 
 ### Frontend
 
-:warning: Currently broken, any idea/PR are welcome to help analyze scrapped data.
-
-[Frontend](https://github.com/RichardDally/BestDeal/blob/master/frontend.py) uses [Dash](https://plot.ly/products/dash/) to display beautiful and customizable graphs.
