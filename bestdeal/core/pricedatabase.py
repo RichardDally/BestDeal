@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import os
+
 from pymongo import MongoClient, ASCENDING
 from typing import Optional
 from loguru import logger
@@ -13,7 +14,7 @@ class PriceDatabase:
     https://www.mongodb.com
     """
 
-    def __init__(self, collection_name, client=None):
+    def __init__(self, collection_name: str, client: Optional[MongoClient] = None):
         self.database_name = "PriceHistorization"
         logger.info('Connecting to database [{}]'.format(self.database_name))
         if client is not None:
@@ -43,6 +44,18 @@ class PriceDatabase:
     def find_distinct_product_types(self) -> list:
         return self.collection.distinct("product_type")
 
+    def find_all_posts_by_product_type(self, product_type: str, datetime_regex: str):
+        """
+        Example: find_all_posts_by_product_type("3090", get_today_date())
+        Do not fetch MindFactory (cannot be ordered from France!)
+        """
+        cursor = self.collection.find(
+            {"product_type": product_type,
+             "source": {"$ne": "MindFactory"},
+             "timestamp": {'$regex': datetime_regex}}
+        )
+        return cursor
+
     def find_last_price(self, product_name: str, datetime_regex: str):
         """
         Example find_last_price("KFA2 GeForce RTX 2080 Ti EX (1-Click OC), 11 Go", get_today_date())
@@ -59,7 +72,7 @@ class PriceDatabase:
 
     def find_cheapest(self, product_type: str, timestamp_regex: Optional[str]):
         """
-        Example: find_cheapest("2080 TI", get_today_date())
+        Example: find_cheapest("3090", get_today_date())
         Do not fetch MindFactory (cannot be ordered from France!)
         """
         post_filter = {"product_type": product_type, "source": {"$ne": "MindFactory"}}
