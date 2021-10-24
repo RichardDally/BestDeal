@@ -4,10 +4,6 @@ BestDeal
 Compare your most wanted products among your favorite vendors to buy cheapest.<br>
 Currently it implements a comparator of GPU and CPU among multiple European hardware vendors.<br>
 
-<img src='https://github.com/RichardDally/BestDeal/blob/master/screenshots/GTX2080_20181202.png' style='width:334px; height:306px; float: right;'>
-
-BestDeal provides you a visualization tool to anticipate best timing to buy.
-
 ### Continuous Integration and code quality
 
 Master branch:
