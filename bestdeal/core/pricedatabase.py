@@ -44,6 +44,21 @@ class PriceDatabase:
     def find_distinct_product_types(self) -> list:
         return self.collection.distinct("product_type")
 
+    def find_distinct_criteria_by_date(self, criteria: str, datetime_regex: str) -> list:
+        """
+        Generic
+        """
+        return self.collection.distinct(
+            criteria,
+            {
+                "source": {"$ne": "MindFactory"},
+                "timestamp": {'$regex': datetime_regex},
+            },
+        )
+
+    def find_available_product_types_by_date(self, datetime_regex: str):
+        return self.find_distinct_criteria_by_date("product_type", datetime_regex)
+
     def find_all_posts_by_product_type(self, product_type: str, datetime_regex: str):
         """
         Example: find_all_posts_by_product_type("3090", get_today_date())
