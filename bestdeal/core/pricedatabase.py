@@ -56,6 +56,24 @@ class PriceDatabase:
             },
         )
 
+    def find_all_posts_by_filters(
+            self,
+            datetime_regex: str,
+            product_type: Optional[str] = None,
+            product_brand: Optional[str] = None,
+            source: Optional[str] = None,
+    ):
+        post_filter = {"timestamp": {'$regex': datetime_regex}}
+        if product_type is not None:
+            post_filter["product_type"] = product_type
+        if source is not None:
+            post_filter["source"] = source
+        if product_brand is not None:
+            post_filter["product_brand"] = product_brand
+
+        mongo_cursor = self.collection.find(post_filter)
+        return mongo_cursor
+
     def find_available_product_types_by_date(self, datetime_regex: str):
         return self.find_distinct_criteria_by_date("product_type", datetime_regex)
 
