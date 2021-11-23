@@ -1,5 +1,5 @@
 import unittest
-from bestdeal.backend.gpu_fetcher import GpuFetcher
+from bestdeal.gpu_fetcher import GpuFetcher
 
 
 class TestFindExactlyOneElement(unittest.TestCase):

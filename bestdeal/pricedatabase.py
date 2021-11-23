@@ -1,11 +1,8 @@
-# coding: utf-8
-
 import os
-
 from pymongo import MongoClient, ASCENDING
 from typing import Optional
 from loguru import logger
-from bestdeal.core.toolbox import get_today_date
+from bestdeal.toolbox import get_today_date
 
 
 class PriceDatabase:
@@ -73,6 +70,11 @@ class PriceDatabase:
 
         mongo_cursor = self.collection.find(post_filter)
         return mongo_cursor
+
+    def find_cheapest_from_cursor(self, mongo_cursor):
+        sorted_cursor = mongo_cursor.sort("product_price", ASCENDING)
+        for post in sorted_cursor.limit(1):
+            return post
 
     def find_available_product_types_by_date(self, datetime_regex: str):
         return self.find_distinct_criteria_by_date("product_type", datetime_regex)

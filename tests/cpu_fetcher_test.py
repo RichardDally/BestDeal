@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-from bestdeal.backend.cpu_fetcher import CpuFetcher
+from bestdeal.cpu_fetcher import CpuFetcher
 
 
 class TestExtractProductData(unittest.TestCase):

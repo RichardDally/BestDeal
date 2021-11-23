@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from bestdeal.core.source import Source
-from bestdeal.core.toolbox import clean_price
+from bestdeal.source import Source
+from bestdeal.toolbox import clean_price
 
 
 class GrosBill(Source):

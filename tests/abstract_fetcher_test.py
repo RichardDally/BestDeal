@@ -1,8 +1,8 @@
 import pytest
 import unittest
-from bestdeal.core.toolbox import get_today_datetime, get_yesterday_datetime
-from bestdeal.backend.abstract_fetcher import AbstractFetcher
-from bestdeal.core.pricedatabase import PriceDatabase
+from bestdeal.toolbox import get_today_datetime, get_yesterday_datetime
+from bestdeal.abstract_fetcher import AbstractFetcher
+from bestdeal.pricedatabase import PriceDatabase
 from pymongo_inmemory import MongoClient
 
 

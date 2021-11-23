@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import re
-from bestdeal.core.source import Source
+from bestdeal.source import Source
 from toolbox import clean_price
 
 

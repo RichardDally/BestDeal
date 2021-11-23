@@ -79,3 +79,8 @@ def clean_price(dirty_price):
     dirty_price = dirty_price.replace(' ', '')
     m = re.search('([0-9]+)[€.,]+([0-9]+)', dirty_price)
     return '{}.{}'.format(m.group(1), m.group(2))
+
+
+def date_range(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)

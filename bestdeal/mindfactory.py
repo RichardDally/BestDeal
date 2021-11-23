@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from bestdeal.core.source import Source
+from bestdeal.source import Source
 from toolbox import clean_price
 from loguru import logger
 

@@ -1,17 +1,17 @@
 import re
 import time
-from bestdeal.core.more_exceptions import SkipTweet
-from bestdeal.core.pricedatabase import PriceDatabase
+from bestdeal.more_exceptions import SkipTweet
+from bestdeal.pricedatabase import PriceDatabase
 from abc import ABCMeta, abstractmethod
-from bestdeal.core.source import Source
+from bestdeal.source import Source
 from typing import Optional, Dict, Tuple, List, Iterable
 from loguru import logger
-from bestdeal.core.toolbox import convert_datetime_to_date
-from bestdeal.core.toolbox import get_north_east_arrow
-from bestdeal.core.toolbox import get_south_east_arrow
-from bestdeal.core.toolbox import get_rightwards_arrow
-from bestdeal.core.toolbox import get_today_date, get_today_datetime, get_yesterday_date
-from bestdeal.core.publish import tweet
+from bestdeal.toolbox import convert_datetime_to_date
+from bestdeal.toolbox import get_north_east_arrow
+from bestdeal.toolbox import get_south_east_arrow
+from bestdeal.toolbox import get_rightwards_arrow
+from bestdeal.toolbox import get_today_date, get_today_datetime, get_yesterday_date
+from bestdeal.publish import tweet
 
 
 class AbstractFetcher:

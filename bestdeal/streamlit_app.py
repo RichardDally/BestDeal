@@ -1,8 +1,11 @@
+import pandas as pd
 from typing import List
 import streamlit as st
+from loguru import logger
 from pymongo import MongoClient, ASCENDING
-from datetime import datetime, timezone
-from bestdeal.core.pricedatabase import PriceDatabase
+from datetime import datetime, timezone, date
+from bestdeal.pricedatabase import PriceDatabase
+from bestdeal.toolbox import date_range
 
 
 class Frontend:
@@ -44,6 +47,39 @@ class Frontend:
                 f"and [{self.selected_source}]"
             )
 
+
+
+    def display_graph(self):
+        self.year = 2021
+        # self.start_date = date(year=self.year, month=1, day=1)
+        # self.end_date = date(year=self.year, month=12, day=31)
+        self.start_date = date(year=self.year, month=11, day=1)
+        self.end_date = date(year=self.year, month=11, day=7)
+        logger.info('Prepare prices from [{}] to [{}]'.format(self.start_date, self.end_date))
+
+        # dico = {
+        #     'LDLC': {"20211101": 1, "20211102": 2},
+        #     'TopAchat': {"20211101": 1, "20211102": 2},
+        # }
+
+        # dico = {}
+        # for product_type in ["3080"]:
+        #     dico[product_type] = {}
+        #     for single_date in date_range(self.start_date, self.end_date):
+        #         current_date = single_date.strftime("%Y%m%d")
+        #         all_posts = self.db.find_all_posts_by_filters(
+        #             datetime_regex=current_date,
+        #             product_type=product_type,
+        #         )
+        #         logger.info(current_date)
+        #         cheapest_post = self.db.find_cheapest_from_cursor(mongo_cursor=all_posts)
+        #         if cheapest_post:
+        #             dico[product_type][current_date] = cheapest_post["product_price"]
+        #
+        # st.write(dico)
+        # chart_data = pd.DataFrame(dico)
+        # st.line_chart(chart_data)
+
     def main(self):
         self.selected_date = st.sidebar.date_input(label="Date", value=datetime.now(timezone.utc))
         self.formatted_selected_date = self.selected_date.strftime("%Y%m%d")
@@ -79,6 +115,8 @@ class Frontend:
 
         if no_click:
             st.info(f"Select a product type and click on Search")
+
+        self.display_graph()
 
 
 if __name__ == '__main__':

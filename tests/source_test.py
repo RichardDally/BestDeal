@@ -1,6 +1,6 @@
 import pytest
-from bestdeal.backend.gpu_fetcher import GpuFetcher
-from bestdeal.sources.topachat import TopAchat
+from bestdeal.gpu_fetcher import GpuFetcher
+from bestdeal.topachat import TopAchat
 
 
 @pytest.mark.parametrize("fetcher_class", [GpuFetcher])
