@@ -1,8 +1,8 @@
 # coding: utf-8
 
 import re
-from bestdeal.source import Source
-from toolbox import clean_price
+from bestdeal.core.source import Source
+from bestdeal.core.toolbox import clean_price
 
 
 class HardwareShop(Source):

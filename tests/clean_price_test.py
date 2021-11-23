@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-from bestdeal.toolbox import clean_price
+from bestdeal.core.toolbox import clean_price
 
 
 class TestCleanPrice(unittest.TestCase):

@@ -1,11 +1,9 @@
-import pandas as pd
 from typing import List
 import streamlit as st
 from loguru import logger
 from pymongo import MongoClient, ASCENDING
 from datetime import datetime, timezone, date
-from bestdeal.pricedatabase import PriceDatabase
-from bestdeal.toolbox import date_range
+from bestdeal.core.pricedatabase import PriceDatabase
 
 
 class Frontend:
