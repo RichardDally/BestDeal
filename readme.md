@@ -4,9 +4,7 @@ BestDeal
 Compare your most wanted products among your favorite vendors to buy cheapest.<br>
 Currently it implements a comparator of GPU and CPU among multiple European hardware vendors.<br>
 
-### Continuous Integration and code quality
-
-Master branch:
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/richarddally/bestdeal)
 
 [![Build Status](https://travis-ci.org/RichardDally/BestDeal.svg?branch=master)](https://travis-ci.org/RichardDally/BestDeal) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/09178071e8a8453fa2acc6d47a4937aa)](https://www.codacy.com/manual/RichardDally/BestDeal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RichardDally/BestDeal&amp;utm_campaign=Badge_Grade)
 
